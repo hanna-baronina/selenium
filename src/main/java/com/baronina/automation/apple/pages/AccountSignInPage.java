@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  * This page is for user to login in apple store.
  */
 public class AccountSignInPage {
+
     /**
      * Number of seconds to wait until element is located or clickable.
      */
@@ -64,5 +65,16 @@ public class AccountSignInPage {
 
     private void waitForElement(ExpectedCondition<WebElement> expectedCondition) {
         new WebDriverWait(driver, WAIT_TIMEOUT).until(expectedCondition);
+    }
+
+    public AccountHomePage signInToAccount(String appleId, String password){
+        // Enter user AppleId in text box.
+        enterAppleId(appleId);
+        // Confirm input by clicking arrow button.
+        confirmAppleId();
+        // Enter user password in text box.
+        enterPassword(password);
+        // Confirm input by clicking arrow button. User is redirected to account home page.
+        return clickSignIn();
     }
 }

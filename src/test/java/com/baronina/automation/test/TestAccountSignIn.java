@@ -12,6 +12,9 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 public class TestAccountSignIn {
 
+    private static final String USER_NAME = "tvetest3@gmail.com";
+    private static final String PASSWORD = "Tvetest25";
+
     WebDriver driver;
 
     @Before
@@ -19,20 +22,20 @@ public class TestAccountSignIn {
         driver = new ChromeDriver();
     }
 
-    @Test
     /**
      * Test verifies account sign in page header text.
      */
-    public void testAccountSignInHeader() {
-        //Create homepage page object.
+    @Test
+    public void testAccountSignInPageHeader() {
+        // Create homepage page object.
         HomePage homePage = new HomePage(driver);
-        //Click bag button in home menu. Submenu is displayed in dropdown.
+        // Click bag button in home menu. Submenu is displayed in dropdown.
         homePage.clickBagButton();
-        //Click account link in submenu drop down. User is redirected to account sign in page.
+        // Click account link in submenu drop down. User is redirected to account sign in page.
         AccountSignInPage accountSignInPage = homePage.clickAccountInDropDown();
-        //Get account sign in page header text.
+        // Get account sign in page header text.
         String accountSignInTitle = accountSignInPage.getAccountSignInHeader();
-        //Compare the actual header of the page with the expected one.
+        // Compare the actual header of the page with the expected one.
         Assert.assertEquals("Sign in to Apple Store", accountSignInTitle);
     }
 
@@ -41,24 +44,24 @@ public class TestAccountSignIn {
      */
     @Test
     public void testAccountSignInValidCredentials() {
-        //Create homepage page object.
+        // Create homepage page object.
         HomePage homePage = new HomePage(driver);
-        //Click bag button in h home menu. Submenu is displayed in dropdown.
+        // Click bag button in home menu. Submenu is displayed in dropdown.
         homePage.clickBagButton();
-        //Click account link in submenu drop down. User is redirected to account sign in page.
+        // Click account link in submenu drop down. User is redirected to account sign in page.
         AccountSignInPage accountSignInPage = homePage.clickAccountInDropDown();
-        //Enter user AppleId in text box.
-        accountSignInPage.enterAppleId("tvetest3@gmail.com");
-        //Confirm input by clicking arrow button.
-        accountSignInPage.confirmAppleId();
-        //Enter user password in text box.
-        accountSignInPage.enterPassword("Tvetest25");
-        //Confirm input by clicking arrow button. User is redirected to account home page.
-        AccountHomePage accountHomePage = accountSignInPage.clickSignIn();
-        //Get account home page header text.
+        //Sign in with valid credentials. User is redirected to account home page.
+        AccountHomePage accountHomePage = accountSignInPage.signInToAccount(USER_NAME, PASSWORD);
+        // Get account home page header text.
         String accountMessage = accountHomePage.getAccountHomeHeader();
-        //Compare the actual header of the page with the expected one.
+        // Compare the actual header of the page with the expected one.
         Assert.assertEquals("Hi, Test.", accountMessage);
+        // Click bag button in home menu. Submenu is displayed in dropdown.
+        homePage.clickBagButton();
+        // Get text from sign in element in dropdown.
+        String actualSignInMenuItemInDropDownText = homePage.getSignInMenuItemInDropDownText();
+        // Compare the actual text of the element with the expected one.
+        Assert.assertEquals("Sign out Test", actualSignInMenuItemInDropDownText);
     }
 
     @After

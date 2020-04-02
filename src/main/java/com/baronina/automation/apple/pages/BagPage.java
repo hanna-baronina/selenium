@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  * This page displays user bag content.
  */
 public class BagPage {
+
     /**
      * Number of seconds to wait until element is present.
      */

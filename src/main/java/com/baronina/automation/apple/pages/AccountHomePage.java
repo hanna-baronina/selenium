@@ -9,12 +9,14 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  * This page is displayed after user is successfully logged in.
  */
 public class AccountHomePage {
+
     /** Number of seconds to wait until element is present. */
     private static final int WAIT_TIMEOUT = 10;
 
     private  WebDriver driver;
 
     private By accountMessage = By.className("rs-account-header");
+    private By signOutLink = By.id("rs-account-signout-link");
 
      AccountHomePage(WebDriver driver){
         this.driver = driver;
@@ -23,5 +25,10 @@ public class AccountHomePage {
     public String getAccountHomeHeader(){
         new WebDriverWait(driver, WAIT_TIMEOUT).until(ExpectedConditions.presenceOfElementLocated(accountMessage));
         return driver.findElement(accountMessage).getText();
+    }
+    public HomePage clickSignOutLink(){
+        new WebDriverWait(driver, WAIT_TIMEOUT).until(ExpectedConditions.presenceOfElementLocated(signOutLink));
+        driver.findElement(signOutLink).click();
+        return new HomePage(driver);
     }
 }

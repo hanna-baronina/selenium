@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  * This page is used for user  login.
  */
 public class SignInPage {
+
     /** Number of seconds to wait until element is present. */
     private static final int WAIT_TIMEOUT = 10;
 
@@ -44,5 +45,11 @@ public class SignInPage {
     public String getErrorMessage(){
         new WebDriverWait(driver, WAIT_TIMEOUT).until(ExpectedConditions.presenceOfElementLocated(errorMessage));
         return driver.findElement(errorMessage).getText();
+    }
+
+    public HomePage signIn(String appleId, String password){
+        enterAppleId(appleId);
+        enterPassword(password);
+        return clickSignIn();
     }
 }
