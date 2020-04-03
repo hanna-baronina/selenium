@@ -64,6 +64,38 @@ public class TestAccountSignIn {
         Assert.assertEquals("Sign out Test", actualSignInMenuItemInDropDownText);
     }
 
+    @Test
+    public void testAccountSignInInvalidUserName(){
+        // Create homepage page object.
+        HomePage homePage = new HomePage(driver);
+        // Click bag button in home menu. Submenu is displayed in dropdown.
+        homePage.clickBagButton();
+        // Click account link in submenu drop down. User is redirected to account sign in page.
+        AccountSignInPage accountSignInPage = homePage.clickAccountInDropDown();
+        // Sign in with invalid username.
+        accountSignInPage.signInToAccount("tvetes@gmail.com", PASSWORD);
+        // Get error message text.
+        String actualLoginErrorMessage = accountSignInPage.getLoginErrorMessage();
+        // Compare the actual error message text with the expected one.
+        Assert.assertEquals("Your Apple ID or password was incorrect.", actualLoginErrorMessage);
+    }
+
+    @Test
+    public void testAccountSignInInvalidPassword(){
+        // Create homepage page object.
+        HomePage homePage = new HomePage(driver);
+        // Click bag button in home menu. Submenu is displayed in dropdown.
+        homePage.clickBagButton();
+        // Click account link in submenu drop down. User is redirected to account sign in page.
+        AccountSignInPage accountSignInPage = homePage.clickAccountInDropDown();
+        // Sign in with invalid password.
+        accountSignInPage.signInToAccount(USER_NAME, "12345");
+        // Get error message text.
+        String actualLoginErrorMessage = accountSignInPage.getLoginErrorMessage();
+        // Compare the actual error message text with the expected one.
+        Assert.assertEquals("Your Apple ID or password was incorrect.", actualLoginErrorMessage);
+    }
+
     @After
     public void after() {
         driver.close();

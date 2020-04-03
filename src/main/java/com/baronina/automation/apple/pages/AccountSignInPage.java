@@ -24,6 +24,7 @@ public class AccountSignInPage {
     private By signInButton = By.id("sign-in");
     private By passwordInput = By.id("password_text_field");
     private By authIFrame = By.id("aid-auth-widget-iFrame");
+    private By loginErrorMessage = By.id ("errMsg");
 
     AccountSignInPage(WebDriver driver) {
         this.driver = driver;
@@ -65,6 +66,11 @@ public class AccountSignInPage {
 
     private void waitForElement(ExpectedCondition<WebElement> expectedCondition) {
         new WebDriverWait(driver, WAIT_TIMEOUT).until(expectedCondition);
+    }
+
+    public String getLoginErrorMessage(){
+        waitForElement(ExpectedConditions.presenceOfElementLocated(loginErrorMessage));
+       return driver.findElement(loginErrorMessage).getText();
     }
 
     public AccountHomePage signInToAccount(String appleId, String password){
