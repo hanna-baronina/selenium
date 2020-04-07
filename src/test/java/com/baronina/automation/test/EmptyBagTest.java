@@ -9,9 +9,9 @@ import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public class TestBag {
+public class EmptyBagTest {
 
-    WebDriver driver;
+    private WebDriver driver;
 
     @Before
     public void before() {
@@ -26,12 +26,12 @@ public class TestBag {
         // Create homepage page object.
         HomePage homePage = new HomePage(driver);
         // Click bag button in home menu. Submenu is displayed in dropdown.
-        homePage.clickBagButton();
+        homePage.clickBagIcon();
         // Click bag link in submenu drop down. User is redirected to user bag page.
         BagPage bagPage = homePage.clickBagInDropDown();
         // Get bag page title.
         String bagPageTitle = bagPage.getBagTitle();
-        // Compare the actual title of the page with the expected one.
+
         Assert.assertEquals("Bag - Apple", bagPageTitle);
     }
 
@@ -39,16 +39,16 @@ public class TestBag {
      * Test verifies bag is empty.
      */
     @Test
-    public void testBagEmptyReflectedAtPageHeader() {
+    public void testEmptyBagPageHeader() {
         // Create homepage page object.
         HomePage homePage = new HomePage(driver);
         // Click bag button in home menu. Submenu is displayed in dropdown.
-        homePage.clickBagButton();
+        homePage.clickBagIcon();
         // Click bag link in submenu drop down. User is redirected to user bag page.
         BagPage bagPage = homePage.clickBagInDropDown();
         // Get bag page header text.
         String bagPageMessage = bagPage.getBagHeader();
-        // Compare the actual header  of the page with the expected one.
+
         Assert.assertEquals("Your bag is empty.", bagPageMessage);
     }
 

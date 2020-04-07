@@ -9,13 +9,12 @@ import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public class TestSignIn {
+public class SignInTest {
 
     private static final String USER_NAME = "tvetest3@gmail.com";
     private static final String PASSWORD = "Tvetest25";
 
-    WebDriver driver;
-
+    private WebDriver driver;
 
     @Before
     public void before(){
@@ -30,13 +29,13 @@ public class TestSignIn {
         // Create homepage page object.
         HomePage homePage = new HomePage(driver);
         // Click bag button in home menu. Submenu is displayed in dropdown.
-        homePage.clickBagButton();
+        homePage.clickBagIcon();
         // Click sign in link in submenu drop down. User is redirected to sign in page.
         SignInPage signInPage = homePage.clickSignInInDropDown();
         // Get sign in page header text.
         String signInPageHeader = signInPage.getSignInHeader();
-        // Compare the actual header of the page with the expected one.
-        Assert.assertTrue(signInPageHeader.toLowerCase().contains("please sign in."));
+
+        Assert.assertEquals("Please sign in.", signInPageHeader);
     }
 
     /**
@@ -47,15 +46,16 @@ public class TestSignIn {
         // Create homepage page object.
         HomePage homePage = new HomePage(driver);
         // Click bag button in home menu. Submenu is displayed in dropdown.
-        homePage.clickBagButton();
+        homePage.clickBagIcon();
         // Click sign in link in submenu drop down. User is redirected to sign in page.
         SignInPage signInPage = homePage.clickSignInInDropDown();
         // Sign in with valid user credentials.
         homePage = signInPage.signIn(USER_NAME, PASSWORD);
         // Click bag button in home menu. Submenu is displayed in dropdown.
-        homePage.clickBagButton();
+        homePage.clickBagIcon();
         String actualSignInMenuItemInDropDownText = homePage.getSignInMenuItemInDropDownText();
-        Assert.assertEquals("Sign out Test", actualSignInMenuItemInDropDownText);;
+
+        Assert.assertEquals("Sign out Test", actualSignInMenuItemInDropDownText);
     }
 
     /**
@@ -66,7 +66,7 @@ public class TestSignIn {
         // Create homepage page object.
         HomePage homePage = new HomePage(driver);
         // Click bag button in home menu. Submenu is displayed in dropdown.
-        homePage.clickBagButton();
+        homePage.clickBagIcon();
         // Click sign in link in submenu drop down. User is redirected to sign in page.
         SignInPage signInPage = homePage.clickSignInInDropDown();
         // Enter user AppleId in text box.
@@ -77,7 +77,7 @@ public class TestSignIn {
         signInPage.clickSignIn();
         // Get error message text.
         String errorMessage = signInPage.getErrorMessage();
-        // Compare the actual error message with the expected one.
+
         Assert.assertEquals("Your Apple ID or password was entered incorrectly.", errorMessage);
     }
 
@@ -89,7 +89,7 @@ public class TestSignIn {
         // Create homepage page object.
         HomePage homePage = new HomePage(driver);
         // Click bag button in home menu. Submenu is displayed in dropdown.
-        homePage.clickBagButton();
+        homePage.clickBagIcon();
         // Click sign in link in submenu drop down. User is redirected to sign in page.
         SignInPage signInPage = homePage.clickSignInInDropDown();
         // Enter incorrect user AppleId in text box.
@@ -98,9 +98,8 @@ public class TestSignIn {
         signInPage.clickSignIn();
         // Get error message text.
         String errorMessage = signInPage.getErrorMessage();
-        // Compare the actual error message with the expected one.
-        Assert.assertEquals("Your Apple ID or password was entered incorrectly.", errorMessage);
 
+        Assert.assertEquals("Your Apple ID or password was entered incorrectly.", errorMessage);
     }
 
     @After

@@ -24,12 +24,15 @@ public class AccountSignInPage {
     private By signInButton = By.id("sign-in");
     private By passwordInput = By.id("password_text_field");
     private By authIFrame = By.id("aid-auth-widget-iFrame");
-    private By loginErrorMessage = By.id ("errMsg");
+    private By loginErrorMessage = By.id("errMsg");
 
     AccountSignInPage(WebDriver driver) {
         this.driver = driver;
     }
 
+    /**
+     * Returns account sign in page header text.
+     */
     public String getAccountSignInHeader() {
         WebElement iFrameElement = driver.findElement(authIFrame);
         driver.switchTo().frame(iFrameElement);
@@ -37,6 +40,9 @@ public class AccountSignInPage {
         return driver.findElement(accountHeader).getText();
     }
 
+    /**
+     * Enters apple id on account sign in page.
+     */
     public void enterAppleId(String appleId) {
         WebElement iFrameElement = driver.findElement(authIFrame);
         driver.switchTo().frame(iFrameElement);
@@ -44,36 +50,57 @@ public class AccountSignInPage {
         driver.findElement(appleIdInput).sendKeys(appleId);
     }
 
+    /**
+     * Confirms apple id input on account sign in page.
+     */
     public void confirmAppleId() {
         confirm();
     }
 
+    /**
+     * Confirms input on account sign in page.
+     */
     private void confirm() {
         waitForElement(ExpectedConditions.elementToBeClickable(signInButton));
         driver.findElement(signInButton).click();
     }
 
+    /**
+     * Confirms apple id and password input on account sign in page.
+     */
     public AccountHomePage clickSignIn() {
         confirm();
         return new AccountHomePage(driver);
     }
 
+    /**
+     * Enters password on account sign in page.
+     */
     public void enterPassword(String password) {
         waitForElement(ExpectedConditions.elementToBeClickable(passwordInput));
         driver.findElement(passwordInput).sendKeys(password);
 
     }
 
+    /**
+     * Waits for specific condition.
+     */
     private void waitForElement(ExpectedCondition<WebElement> expectedCondition) {
         new WebDriverWait(driver, WAIT_TIMEOUT).until(expectedCondition);
     }
 
-    public String getLoginErrorMessage(){
+    /**
+     * Returns login error message text.
+     */
+    public String getLoginErrorMessage() {
         waitForElement(ExpectedConditions.presenceOfElementLocated(loginErrorMessage));
-       return driver.findElement(loginErrorMessage).getText();
+        return driver.findElement(loginErrorMessage).getText();
     }
 
-    public AccountHomePage signInToAccount(String appleId, String password){
+    /**
+     * Signs in user to the account. Returns account home page object.
+     */
+    public AccountHomePage signInToAccount(String appleId, String password) {
         // Enter user AppleId in text box.
         enterAppleId(appleId);
         // Confirm input by clicking arrow button.

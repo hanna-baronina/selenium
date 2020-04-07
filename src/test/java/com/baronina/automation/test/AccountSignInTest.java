@@ -10,12 +10,12 @@ import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public class TestAccountSignIn {
+public class AccountSignInTest {
 
     private static final String USER_NAME = "tvetest3@gmail.com";
     private static final String PASSWORD = "Tvetest25";
 
-    WebDriver driver;
+    private WebDriver driver;
 
     @Before
     public void before() {
@@ -30,12 +30,12 @@ public class TestAccountSignIn {
         // Create homepage page object.
         HomePage homePage = new HomePage(driver);
         // Click bag button in home menu. Submenu is displayed in dropdown.
-        homePage.clickBagButton();
+        homePage.clickBagIcon();
         // Click account link in submenu drop down. User is redirected to account sign in page.
         AccountSignInPage accountSignInPage = homePage.clickAccountInDropDown();
         // Get account sign in page header text.
         String accountSignInTitle = accountSignInPage.getAccountSignInHeader();
-        // Compare the actual header of the page with the expected one.
+
         Assert.assertEquals("Sign in to Apple Store", accountSignInTitle);
     }
 
@@ -47,7 +47,7 @@ public class TestAccountSignIn {
         // Create homepage page object.
         HomePage homePage = new HomePage(driver);
         // Click bag button in home menu. Submenu is displayed in dropdown.
-        homePage.clickBagButton();
+        homePage.clickBagIcon();
         // Click account link in submenu drop down. User is redirected to account sign in page.
         AccountSignInPage accountSignInPage = homePage.clickAccountInDropDown();
         //Sign in with valid credentials. User is redirected to account home page.
@@ -57,42 +57,48 @@ public class TestAccountSignIn {
         // Compare the actual header of the page with the expected one.
         Assert.assertEquals("Hi, Test.", accountMessage);
         // Click bag button in home menu. Submenu is displayed in dropdown.
-        homePage.clickBagButton();
+        homePage.clickBagIcon();
         // Get text from sign in element in dropdown.
         String actualSignInMenuItemInDropDownText = homePage.getSignInMenuItemInDropDownText();
-        // Compare the actual text of the element with the expected one.
+
         Assert.assertEquals("Sign out Test", actualSignInMenuItemInDropDownText);
     }
 
+    /**
+     * Test verifies login to user account with invalid user name.
+     */
     @Test
-    public void testAccountSignInInvalidUserName(){
+    public void testAccountSignInInvalidUserName() {
         // Create homepage page object.
         HomePage homePage = new HomePage(driver);
         // Click bag button in home menu. Submenu is displayed in dropdown.
-        homePage.clickBagButton();
+        homePage.clickBagIcon();
         // Click account link in submenu drop down. User is redirected to account sign in page.
         AccountSignInPage accountSignInPage = homePage.clickAccountInDropDown();
         // Sign in with invalid username.
         accountSignInPage.signInToAccount("tvetes@gmail.com", PASSWORD);
         // Get error message text.
         String actualLoginErrorMessage = accountSignInPage.getLoginErrorMessage();
-        // Compare the actual error message text with the expected one.
+
         Assert.assertEquals("Your Apple ID or password was incorrect.", actualLoginErrorMessage);
     }
 
+    /**
+     * Test verifies login to user account with invalid password.
+     */
     @Test
-    public void testAccountSignInInvalidPassword(){
+    public void testAccountSignInInvalidPassword() {
         // Create homepage page object.
         HomePage homePage = new HomePage(driver);
         // Click bag button in home menu. Submenu is displayed in dropdown.
-        homePage.clickBagButton();
+        homePage.clickBagIcon();
         // Click account link in submenu drop down. User is redirected to account sign in page.
         AccountSignInPage accountSignInPage = homePage.clickAccountInDropDown();
         // Sign in with invalid password.
         accountSignInPage.signInToAccount(USER_NAME, "12345");
         // Get error message text.
         String actualLoginErrorMessage = accountSignInPage.getLoginErrorMessage();
-        // Compare the actual error message text with the expected one.
+
         Assert.assertEquals("Your Apple ID or password was incorrect.", actualLoginErrorMessage);
     }
 
